@@ -1,0 +1,10 @@
+a.	
+  SELECT ean, descr
+  FROM product 
+  NATURAL JOIN replenishmentEvent
+    GROUP BY ean
+    HAVING sum(units) >= ALL (
+        SELECT sum(units)
+        FROM replenishmentevent
+        GROUP BY ean
+        );

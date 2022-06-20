@@ -1,0 +1,36 @@
+RETALHISTA:
+- TIN vs Name for primary key -> TINNN outro n se sublime
+
+PONTO DE RETALHE:
+- Entidade fraca, yes/no? NOOOO
+- Isso era se maquina tivesse em varios locais mas so esta em 1
+- escolher um nome ou morada p id
+
+ID DA MAQUINA N DEPENDE DO SITIO ONDE ESTA LOGO MAQUINA N PODE SER FRACA
+
+ENTIDADE CUJA FORMA DE IDENTIFICAR DEPENDNE DA FORTE
+PRATELEIRA PODE SER FRACA PQ E PRATELEIRA X da maquina IVM
+
+IVM:
+- Agregação de prateleiras? NOPE, fazer o q fizemos para o ponto de retalhe (q JÁ N É ENTIDADE FRACA)
+
+PRATELEIRA:
+- Contem produtos vs é agregação de produtos vs contem agregação de produtos
+- Prateleira como entidade fraca, pq é prateleira 123 da maquina + id da maquina
+
+- p existir prateleira NÃO tem q existir produtos, logo n
+
+Como máquinas teem produtos, e produtos teem plaogramas,
+maquinas teem planogramas
+
+relacao produto prateleira e planograma
+
+Retalhistas resp. por cat. produtos
+
+2 retalhistas n mudam mesmo produto na mm maquina
+mas pode mudar croassaint e bebidas frias
+
+arvore hierarquica
+
+um no so tem 1 pai
+uma categoria nunca e filha de mais de uma supercategoria

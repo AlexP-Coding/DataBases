@@ -1,0 +1,24 @@
+1.
+SELECT retailer_tin, COUNT(category_name) 
+FROM  responsible_for 
+GROUP BY retailer_tin
+HAVING COUNT(category_name) >= ALL
+	(SELECT COUNT(category_name)
+	FROM responsible_for
+	GROUP BY retailer_tin);
+
+2.
+SELECT retailer_tin 
+FROM responsible_for 
+WHERE category_name IN (SELECT category_name 
+			FROM simple_category); 
+
+3.
+SELECT product_ean 
+FROM product EXCEPT (SELECT product_ean FROM replenishment_event);
+
+4.
+SELECT product_ean
+FROM replenishment_event
+GROUP BY product_ean
+HAVING COUNT(DISTINCT retailer_tin) = 1;

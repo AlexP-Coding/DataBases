@@ -1,0 +1,41 @@
+RI tem de mencionar os ids:
+
+hasOther:
+RI-1 do category passar para hasOther
+como RI1: child_name different from super_name
+Hierarquia n da p representar i think, tem q ser RI-2 we're good
+Pq child name E super name com unicidade?
+e não só child_name? (ppt S02-H4, p43). Assim pode-se tirar o 1o RI
+RI-Obrigatoriedade parece ok
+
+
+replenishment event
+
+agregação de 2 entidades, a agregar c associaçao
+do meio
+vai buscar a chave de um lado e outro
+agregaçao e associacao planograma teem as mms chaves
+mas shelf é entidade fraca
+replenishment precisa:
+- da chave da shelf (nr + serial)
+- ean produto
+- instante
+
+
+- chave composta com child sublinhado mas super não
+
+
+
+Ver modelo Relacional em vez de relacional
+
+1. from é a tabela q escolhe (has Replenishment), sigma é o where
+laço é natural join
+
+2. (pi)select atributo Serial number
+(sigma)where 
+
+3. G é agregação, necessario p usar sum, max, min, ...
+
+4.
+T -> atribui a tabela dali a uma var
+Somar todas as ocorrencias desse evento e descrição

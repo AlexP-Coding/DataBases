@@ -1,0 +1,55 @@
+- 
+
+
+Inteligent Vending Machines (IVM) -> Smart Cabinets:
+- instaladas num ponto de retalho
+- nr de serie do fabricante
+- retalhista
+- prateleiras
+
+Instaladas num ponto de retalho
+Ponto de retalho:
+- nome
+- morada
+
+fabricante:
+- nr serie do fabricante
+
+retalhista:
+- TIN
+- nome
+
+produto:
+- codigo EAN
+- planograma
+- designação textual
+- marca/nome
+- tipo embalagem
+- categoria
+
+categoria:
+- categoria simples
+- super categoria
+- tipo de prateleira
+- retalhista resposavel
+
+planograma:
+- prateleira
+- nr de frentes visiveis
+- nr maximo de unidades na prateleira
+
+prateleiras:
+- id
+- largura
+- altura
+- tipo (temperatura ambiente, quente, frio)
+- tipo: subcategoria (frio positivo, frio negativo)
+
+evento de reabastecimento:
+- timer
+- nr unidades substituidas
+- retalhista tin
+- retalhista nome (?)
+
+-historia dos eventos de reabastecimento
+- nr de unnidades repostas n excede 
