@@ -272,7 +272,7 @@ create table replenishment_event (
 	shelf_nr numeric(16,0) not null,
 	ivm_serial_number numeric(5,0) not null,
 	ivm_manuf varchar(255) not null,
-	event_instant varchar(255) not null,
+	event_instant date not null,
 	replenished_units numeric(3, 0) not null,
 	retailer_tin varchar(9) not null,
 	constraint pk_replenishment_event primary key(product_ean, shelf_nr, ivm_serial_number, ivm_manuf, event_instant),
