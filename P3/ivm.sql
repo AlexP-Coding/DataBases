@@ -18,6 +18,7 @@ drop table if exists replenishment_event cascade;
 -- Enviar: 
 --  scp ivm.sql ist197375@sigma.ist.utl.pt:~/BD/Project/
 --  scp carregamento.sql ist197375@sigma.ist.utl.pt:~/BD/Project/
+--  scp ivm.sql carregamento.sql ist197375@sigma.ist.utl.pt:~/BD/Project/
 -- Buscar: 
 --  scp ist197375@sigma.ist.utl.pt:~/BD/Project/ivm.sql ./
 --  scp ist197375@sigma.ist.utl.pt:~/BD/Project/carregamento.sql ./
