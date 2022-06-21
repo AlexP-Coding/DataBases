@@ -1,0 +1,23 @@
+ver lab 9
+qdo se faz post vai no request
+
+
+
+- Remoção de categoria com pai e c filho
+
+- 5.d) É aceitável fazer por python a listagem? 
+Gerar queeries em python e enviar p BD, p ser mais
+específico
+
+COM TRIGGERS PLSS. SENÃO - HOW?
+- Podemos, ao eliminar uma categoria, 
+em vez de eliminar todas as suas descendentes,
+tornar as ascendentes imediatas em categorias_simples
+se não tiverem descendentes?
+
+- Podemos adicionar sempre uma nova categoria 
+à secção categoria_simples e, ao saber que vai ser 
+adicionada ao has_other, eliminar a categoria_simples
+(mas não a categoria) e, se não tiver ja entrada no
+has_other - como super, meter como super
+e depois meter entrada no has_other?
