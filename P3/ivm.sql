@@ -300,3 +300,8 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER chk_units_replenishment_event
 BEFORE UPDATE OR INSERT ON replenishment_event 
 FOR EACH ROW EXECUTE PROCEDURE chk_units_exceeded();
+
+DROP VIEW if exists replenishment_events_for_ivm;
+CREATE VIEW replenishment_events_for_ivm
+AS
+	SELECT * FROM replenishment_event NATURAL JOIN product;
