@@ -34,8 +34,9 @@ drop table if exists replenishment_event cascade;
 create table category (
 	category_name varchar(255) not null,
 	constraint pk_category primary key(category_name)
-	-- RI-RE1: O valor do atributo nome de qualquer registo da relação categoria 
-	--tem de existir em na relação categoria_simples ou na relação super_categoria
+	-- RI-RE1 (non-applicable):
+	-- O valor do atributo nome de qualquer registo da relação categoria 
+	-- tem de existir em na relação categoria_simples ou na relação super_categoria
 );
 
 create table simple_category (
@@ -88,7 +89,7 @@ create table product (
 	category_name varchar(255) not null,
 	product_descr varchar(255),
 	constraint pk_product primary key(product_ean),
-	constraint fk_product_category foreign key(category_name) references category(category_name)
+	constraint fk_product_simple_category foreign key(category_name) references simple_category(category_name)
 -- RI-RE6: O valor do atributo ean existente em qualquer registo da relação 
 -- produto tem de existir também no atributo ean da relação tem_categoria
 );
@@ -301,7 +302,26 @@ CREATE TRIGGER chk_units_replenishment_event
 BEFORE UPDATE OR INSERT ON replenishment_event 
 FOR EACH ROW EXECUTE PROCEDURE chk_units_exceeded();
 
-DROP VIEW if exists replenishment_events_for_ivm;
-CREATE VIEW replenishment_events_for_ivm
+DROP VIEW if exists Vendas;
+CREATE VIEW Vendas(ean, cat, ano, trimestre, mes, dia_mes, dia_semana, distrito, concelho, unidades)
 AS
-	SELECT * FROM replenishment_event NATURAL JOIN product;
+	SELECT
+	product_ean AS ean,
+	category_name AS cat,
+	EXTRACT(YEAR FROM event_instant) AS ano,
+	ROUND(EXTRACT(MONTH FROM event_instant) / 4 + 1) AS trimestre,
+	EXTRACT(MONTH FROM event_instant) AS mes,
+	EXTRACT(DAY FROM event_instant) AS dia_mes,
+	CASE
+		WHEN EXTRACT(dow FROM event_instant) = 0 THEN 'Sunday'
+		WHEN EXTRACT(dow FROM event_instant) = 1 THEN 'Monday'
+		WHEN EXTRACT(dow FROM event_instant) = 2 THEN 'Tuesday'
+                WHEN EXTRACT(dow FROM event_instant) = 3 THEN 'Wednesday'
+                WHEN EXTRACT(dow FROM event_instant) = 4 THEN 'Thursday'
+                WHEN EXTRACT(dow FROM event_instant) = 5 THEN 'Friday'
+                WHEN EXTRACT(dow FROM event_instant) = 6 THEN 'Saturday'
+	END dia_semana,
+	point_district AS distrito,
+	point_municipality AS concelho,
+	replenished_units AS unidades
+	FROM product NATURAL JOIN replenishment_event NATURAL JOIN installed_at NATURAL JOIN point_of_retail;

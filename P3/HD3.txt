@@ -4,6 +4,17 @@ qdo se faz post vai no request
 
 
 - Remoção de categoria com pai e c filho
+R:
+- é p simular o on delete cascade
+- pode-se usar so transactions p apagar recursivamente
+- pode-se usar PROCEDURE
+- pode-se, sim, fazer em python
+- se apagarmos categoria, apenas se apaga produto se for a principal
+- withRecursive do posgres
+- ideia é remover de forma a n dar trigger de chk IC
+
+- 
+
 
 - 5.d) É aceitável fazer por python a listagem? 
 Gerar queeries em python e enviar p BD, p ser mais
