@@ -12,6 +12,16 @@ drop table if exists planogram cascade;
 drop table if exists retailer cascade;
 drop table if exists responsible_for cascade;
 drop table if exists replenishment_event cascade;
+-- Entrar:
+--  ssh ist197375@sigma.ist.utl.pt
+--  psql -h db.tecnico.ulisboa.pt -U ist197375
+-- Enviar: 
+--  scp ivm.sql ist197375@sigma.ist.utl.pt:~/BD/Project/
+--  scp carregamento.sql ist197375@sigma.ist.utl.pt:~/BD/Project/
+-- Buscar: 
+--  scp ist197375@sigma.ist.utl.pt:~/BD/Project/ivm.sql ./
+--  scp ist197375@sigma.ist.utl.pt:~/BD/Project/carregamento.sql ./
+
 ----------------------------------------
 -- Table Creation
 ----------------------------------------
@@ -24,18 +34,24 @@ drop table if exists replenishment_event cascade;
 create table category (
 	category_name varchar(255) not null,
 	constraint pk_category primary key(category_name)
+	-- RI-RE1: O valor do atributo nome de qualquer registo da relação categoria 
+	--tem de existir em na relação categoria_simples ou na relação super_categoria
 );
 
 create table simple_category (
 	category_name varchar(255) not null,
 	constraint pk_simple_category primary key(category_name),
 	constraint fk_simple_category_category foreign key(category_name) references category(category_name)
+-- RI-RE2: O valor do aributo nome de qualquer registo de categoria_simples 
+-- não pode existir em super_categoria
 );
 
 create table super_category (
 	category_name varchar(255) not null,
 	constraint pk_super_category primary key(category_name),
 	constraint fk_super_category_category foreign key(category_name) references category(category_name)
+-- RI-RE3: O valor do atributo nome de qualquer registo tem de existir 
+-- no atributo super_categoria da relação constituída
 );
 
 create table has_other (
@@ -44,6 +60,11 @@ create table has_other (
 	constraint pk_has_other primary key(child_category),
 	constraint fk_has_other_super_category foreign key(super_category) references super_category(category_name),
 	constraint fk_has_other_category foreign key(child_category) references category(category_name)
+-- RI-RE4 não podem existir valores repetidos dos atributos 
+-- super_categoria e categoria 
+-- numa sequência de registos relacionados pela FK categoria
+-- RI-RE5: Para qualquer registo desta relação, 
+-- verifica-se que os atributos super_categoria e categoria são distintos
 );
 
 CREATE OR REPLACE FUNCTION chk_category_loop()
@@ -68,6 +89,8 @@ create table product (
 	product_descr varchar(255),
 	constraint pk_product primary key(product_ean),
 	constraint fk_product_category foreign key(category_name) references category(category_name)
+-- RI-RE6: O valor do atributo ean existente em qualquer registo da relação 
+-- produto tem de existir também no atributo ean da relação tem_categoria
 );
 
 create table has_category (
@@ -125,8 +148,8 @@ create table installed_at (
 	ivm_serial_number numeric(5,0) not null,
 	ivm_manuf varchar(255) not null,
 	point_name varchar(255) not null,
-	constraint pk_installed_at primary key(ivm_manuf, ivm_serial_number, point_name),
-	constraint fk_installed_at_ivm foreign key(ivm_manuf, ivm_serial_number) references ivm(ivm_manuf, ivm_serial_number),
+	constraint pk_installed_at primary key(ivm_serial_number, ivm_manuf),
+	constraint fk_installed_at_ivm foreign key(ivm_serial_number, ivm_manuf) references ivm(ivm_serial_number, ivm_manuf),
 	constraint fk_installed_at_point_of_retail foreign key(point_name) references point_of_retail(point_name)
 );
 
@@ -226,20 +249,21 @@ FOR EACH ROW EXECUTE PROCEDURE chk_insert_planogram();
 --$$ LANGUAGE plpgsql;
 
 create table retailer (
-	retailer_tin numeric(16,0) not null,
+	retailer_tin varchar(9) not null,
 	retailer_name varchar(255) not null unique,
 	constraint pk_retailer primary key(retailer_tin)
+-- RI-RE7: unique(name)
 );
 
 create table responsible_for (
+	category_name varchar(255) not null,
+	retailer_tin varchar(9) not null,
 	ivm_serial_number numeric(5,0) not null,
 	ivm_manuf varchar(255) not null,
-	retailer_tin numeric(16,0) not null,
-	category_name varchar(255) not null,
-	constraint pk_responsible_for primary key(ivm_serial_number, ivm_manuf, retailer_tin, category_name),
-	constraint fk_responsible_for_ivm foreign key(ivm_serial_number, ivm_manuf) references ivm(ivm_serial_number, ivm_manuf),
+	constraint pk_responsible_for primary key(retailer_tin, category_name, ivm_serial_number, ivm_manuf),
+	constraint fk_responsible_for_category foreign key(category_name) references category(category_name),
 	constraint fk_responsible_for_retailer foreign key(retailer_tin) references retailer(retailer_tin),
-	constraint fk_responsible_for_category foreign key(category_name) references category(category_name)
+	constraint fk_responsible_for_ivm foreign key(ivm_serial_number, ivm_manuf) references ivm(ivm_serial_number, ivm_manuf)
 );
 
 create table replenishment_event (
@@ -249,7 +273,7 @@ create table replenishment_event (
 	ivm_manuf varchar(255) not null,
 	event_instant varchar(255) not null,
 	replenished_units numeric(3, 0) not null,
-	retailer_tin numeric(16,0) not null,
+	retailer_tin varchar(9) not null,
 	constraint pk_replenishment_event primary key(product_ean, shelf_nr, ivm_serial_number, ivm_manuf, event_instant),
 	constraint fk_replenishment_event_planogram foreign key(product_ean, shelf_nr, ivm_serial_number, ivm_manuf) references planogram(product_ean, shelf_nr, ivm_serial_number, ivm_manuf),
 	constraint fk_replenishment_event_retailer foreign key(retailer_tin) references retailer(retailer_tin)
