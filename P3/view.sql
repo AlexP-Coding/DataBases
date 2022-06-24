@@ -1,3 +1,6 @@
+----------------------------------------
+-- VIEWS
+----------------------------------------
 DROP VIEW if exists Vendas;
 CREATE VIEW Vendas(ean, cat, ano, trimestre, mes, dia_mes, dia_semana, distrito, concelho, unidades)
 AS
@@ -21,3 +24,8 @@ AS
 	point_municipality AS concelho,
 	replenished_units AS unidades
 	FROM product NATURAL JOIN replenishment_event NATURAL JOIN installed_at NATURAL JOIN point_of_retail;
+
+DROP VIEW if exists replenishment_events_for_ivm;
+CREATE VIEW replenishment_events_for_ivm
+AS
+        SELECT * FROM replenishment_event NATURAL JOIN product;

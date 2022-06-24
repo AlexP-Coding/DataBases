@@ -92,7 +92,6 @@ insert into shelf values(4, 61824, 'Mars Inc.', 30.00, 'Leite');
 insert into shelf values(1, 73719, 'Paytec', 100.00, 'Leite');
 insert into shelf values(3, 73719, 'Paytec', 60.00, 'Águas');
 insert into shelf values(1, 84712, 'Seaga', 100.00, 'Carnes Vermelhas');
---insert into shelf values(3, 84712, 'Seaga', 100.00, 'Doces');
 insert into shelf values(3, 84712, 'Seaga', 100.00, 'Tabletes');
 insert into shelf values(4, 84712, 'Seaga', 70.00, 'Vegetais');
 
@@ -125,7 +124,6 @@ insert into responsible_for values('Tubérculos', '701013754', '54623', 'Mars In
 insert into responsible_for values('Águas', '406996794', '54623', 'Mars Inc.');
 insert into responsible_for values('Águas', '406996794', '61824', 'Mars Inc.');
 insert into responsible_for values('Tabletes', '909025806', '61824', 'Mars Inc.');
---insert into responsible_for values('Carne', '501748680', '61824', 'Mars Inc.');
 insert into responsible_for values('Carnes Vermelhas', '501748680', '61824', 'Mars Inc.');
 insert into responsible_for values('Águas', '406996794', '73719', 'Paytec');
 insert into responsible_for values('Carnes Vermelhas', '909025806', '73719', 'Paytec');
@@ -144,4 +142,3 @@ insert into replenishment_event values('0000000000008', 1, '73719', 'Paytec', '1
 insert into replenishment_event values('0000000000013', 4, '84712', 'Seaga', '6/10/2022', 1, '501748680');
 insert into replenishment_event values('0000000000013', 4, '84712', 'Seaga', '3/1/2022', 1, '501748680');
 insert into replenishment_event values('0000000000013', 4, '84712', 'Seaga', '26/11/2022', 1, '406996794');
-
