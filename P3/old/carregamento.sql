@@ -4,18 +4,14 @@ insert into ivm values(61824, 'Mars Inc.');
 insert into ivm values(73719, 'Paytec');
 insert into ivm values(84712, 'Seaga');
 
+insert into category values('Comida');
 insert into category values('Tubérculos');
-insert into category values('Batata');
-insert into category values('Batata Frita');
-insert into category values('Batata Cozida');
 insert into category values('Doces');
-insert into category values('Tabletes');
-insert into category values('Bolachas');
-insert into category values('Belgas');
-insert into category values('Wafers');
 insert into category values('Congelados');
 insert into category values('Carne');
 insert into category values('Laticínios');
+insert into category values('Batata');
+insert into category values('Tabletes');
 insert into category values('Doces Simples');
 insert into category values('Pão congelado');
 insert into category values('Carnes Vermelhas');
@@ -27,10 +23,9 @@ insert into category values('Águas');
 insert into category values('Cereais');
 insert into category values('Vinhos');
 
+insert into super_category values('Comida');
 insert into super_category values('Tubérculos');
-insert into super_category values('Batata');
 insert into super_category values('Doces');
-insert into super_category values('Bolachas');
 insert into super_category values('Congelados');
 insert into super_category values('Carne');
 insert into super_category values('Laticínios');
@@ -66,14 +61,10 @@ insert into product values('0000000000014', 'Águas', 'Água Penacova');
 
 ---
 
+insert into has_other values('Comida', 'Carne');
 insert into has_other values('Tubérculos', 'Batata');
-insert into has_other values('Batata', 'Batata Frita');
-insert into has_other values('Batata', 'Batata Cozida');
 insert into has_other values('Doces', 'Tabletes');
 insert into has_other values('Doces', 'Doces Simples');
-insert into has_other values('Doces', 'Bolachas');
-insert into has_other values('Bolachas', 'Wafers');
-insert into has_other values('Bolachas', 'Belgas');
 insert into has_other values('Carne', 'Carnes Vermelhas');
 insert into has_other values('Carne', 'Carnes Brancas');
 insert into has_other values('Congelados', 'Pão congelado');
