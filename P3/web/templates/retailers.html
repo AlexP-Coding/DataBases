@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Retailers
+{% endblock %}
+
+{% block body %}
+<body>
+<br>
+<form action="./" method="POST">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Adicionar retalhista</h3>
+        </div>
+        <div class="col-md-6">
+            <h3>Listagem de retalhistas</h3>
+        </div>
+        <div class="col-md-3">
+            <b>TIN</b> <br>
+            <input name="retailer_tin"></input>
+            <br> <br>
+            <span style="white-space: nowrap">Se o TIN não for especificado será lhe atribuído um aleatório.</span>
+            <input type="submit" name="add" value="Adicionar"></input>
+        </div>
+        <div class="col-md-2">
+            <b>Nome</b><br>
+            <input name="retailer_name" required></input>
+        </div>
+    
+</form>
+
+<div class="col-md-6 offset-md-1">
+{% if cursor %}
+    <table class="table table-hover" style="width:100%">
+        <thead class="table-dark" >
+            <tr>
+                <th>Retailer TIN</th>
+                <th>Retailer Name</th>
+		        <th>Informações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in cursor %}
+            <tr>
+                <td>{{ record[0] }}</td>
+                <td>{{ record[1] }}</td>
+		        <form action="./" method="POST">
+                        <input type="hidden" name="retailer_tin" value="{{ record[0] }}"></input>
+                    <td><input type="submit" name="remove" value="Remover"></input></td>
+                </form>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        
+{% else %}
+    <p> Erro: ao obter dados da base de dados!</p>
+{% endif %}
+</div>
+</div>
+</div>
+
+
+
+</body>
+{% endblock %}
+</html>
+

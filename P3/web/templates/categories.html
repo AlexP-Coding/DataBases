@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+Index Page
+
+{% endblock %}
+
+{% block body %}
+<body>
+{% if cursor %}
+<br>
+<form action="./categories" method="POST">
+    <div class="row" style="height: 0">
+        <div class="col-md-6">
+            <h3>Adicionar categoria</h3>
+        </div>
+        <div class="col-md-6">
+            <h3>Listagem de categorias</h3>
+        </div>
+        <div class="col-md-5">
+
+            <b>Nome</b><br>
+            <input name="category_name" required></input>
+            <br><br>
+            <input type="submit" name="add" value="Adicionar"></input>
+            <br><br>
+    </form>
+
+            <form action="./categories" method="POST">
+                <div class="row">
+                    <h3>Adicionar sub-categoria</h3>
+                    <div class="col-md-5">
+                        <b>Nome</b><br>
+                        <input name="category_name" required></input>
+                        <br>
+                    </div>
+                    <div class="col-md-5 offset-md-1">
+                        <b>Subcategoria de</b><br>
+                        <select name="sub">
+                            {% for record in cursor_options %}
+                            <option>{{ record[0] }}</option>
+                            {% endfor %}
+                        </select><br><br>
+                    </div>
+                </div>
+                <input type="submit" name="add-sub" value="Adicionar"></input>
+            </form>
+            {% if cursor_two %}
+            <br>
+            <h4>Sub-categorias de {{ name }}</h4>
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Sub-categorias</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in cursor_two %}
+                    <tr>
+                        <td>{{ record[0] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% elif error %}
+            <br>
+                <h4 style="width:150%">A categoria {{ name|lower }} não tem descendentes.</h4>            
+            {% endif %}
+        </div>
+
+<div class="col-md-6 offset-md-1"> 
+    <span>Carregue no nome de uma categoria para ver os seus descendentes!</span>
+
+    <table class="table table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Categorias</th>
+                <th>Super cat.</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in cursor %}
+            <tr><form action="./categories" method="POST">
+                    <td><input type="submit" name="list" id="links" value="{{ record[0] }}"></input></td>
+                </form>
+                <td>{{ record[1] }}</td>
+                <form action="./categories" method="POST">
+                    <input type="hidden" name="category_name" value="{{ record[0] }}"></input>
+                <td><input type="submit" name="remove" value="Remover"></input></td>
+                </form>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+{% else %}
+    <p> Erro: ao obter dados da base de dados!</p>
+{% endif %}
+</div>
+
+</body>
+{% endblock %}
