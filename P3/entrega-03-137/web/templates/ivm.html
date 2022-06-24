@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+Display IVM info
+
+{% endblock %}
+{% block body %}
+<body>
+{% if cursor %}
+    <table>
+        <thead>
+	    <tr>
+		<th>IVM {{ serial }}</th>
+	    </tr>
+            <tr>
+                <th>Product EAN</th>
+                <th>Category</th>
+                <th>Units</th>
+                <th>Shelf</th>
+                <th>Date</th>
+                <th>Retailer TIN</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in cursor %}
+                <tr>
+                    <td>{{ record[0] }}</td>
+                    <td>{{ record[1] }}</td>
+                    <td>{{ record[2] }}</td>
+                    <td>{{ record[3] }}</td>
+                    <td>{{ record[4] }}</td>
+                    <td>{{ record[5] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p> Erro: não foi possível obter dados da base de dados!</p>
+{% endif %}
+<br>
+{% if cursor_two %}
+    <table border="2px">
+        <thead>
+	    <tr>
+		<th>IVM {{ serial }}</th>
+	    </tr>
+            <tr>
+                <th>Product EAN</th>
+                <th>Category</th>
+                <th>Total Units</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in cursor_two %}
+                <tr>
+                    <td>{{ record[0] }}</td>
+                    <td>{{ record[1] }}</td>
+                    <td>{{ record[2] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p> Erro: não foi possível obter dados da base de dados!</p>
+{% endif %}
+</body>
+{% endblock %}

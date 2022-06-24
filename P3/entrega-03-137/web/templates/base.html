@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>
+        {% block title %} {% endblock %}
+    </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<style>
+    #nav-div {
+    text-align: center;
+    display: flex;
+    align-items: center; /* Vertical center alignment */
+    justify-content: center;
+}
+    .nav-bar {
+	height: 60px;
+        background-color: #212529;
+    }
+    #nav {
+        padding: 6px 15px;
+        text-decoration: none;
+        color: white;
+        border-radius: 20px;
+    }
+    #nav:hover {
+        background-color: rgb(36, 123, 149) !important;
+        color: white;
+        transition-duration: 0.5s;
+    }
+    #links {
+        border: none;
+        background-color: rgba(0,0,0,0);
+        transition-duration: 0.5s;
+    }
+    #links:hover {
+        font-size: 14pt;
+        transition-duration: 0.5s;
+    }
+</style>
+<div class="row nav-bar">
+    <div id="nav-div" class="col-md-2"><a id="nav" href="./">Retailers</a></div>
+    <div id="nav-div" class="col-md-2"><a id="nav" href="./ivms">IVMs</a></div>
+    <div id="nav-div" class="col-md-2"><a id="nav" href="./categories">Categories</a></div>
+</div>
+<div  style="padding:20px">
+{% block body %}
+
+{% endblock %}
+</div>
+</html>

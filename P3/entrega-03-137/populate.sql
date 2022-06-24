@@ -302,25 +302,6 @@ DROP PROCEDURE if exists delete_cat(name);
 CREATE OR REPLACE PROCEDURE delete_cat(name varchar(255))
 AS
 $$
-	DECLARE c CURSOR FOR (SELECT * FROM list_subs(name));
-	DECLARE var varchar(255);
-BEGIN
-	OPEN c;
-	LOOP
-		FETCH c INTO var;
-		EXIT WHEN NOT FOUND;
-		DELETE FROM has_other WHERE child_category=var;
-		CALL delete_cat_aux(var);
-	END LOOP;
-	CLOSE c;
-	CALL delete_cat_aux(name);
-END;
-$$ LANGUAGE plpgsql;
-
-DROP PROCEDURE if exists delete_cat_aux(name);
-CREATE OR REPLACE PROCEDURE delete_cat_aux(name varchar(255))
-AS
-$$
     DECLARE ean has_category.product_ean%TYPE;
     DECLARE c_aux CURSOR FOR (SELECT * FROM has_category WHERE category_name=name);
     DECLARE myvar has_category%ROWTYPE;
@@ -334,6 +315,7 @@ BEGIN
 	DELETE FROM replenishment_event WHERE product_ean = ean;
         DELETE FROM planogram WHERE product_ean = ean;
     END LOOP;
+    UPDATE has_other SET super_category = (SELECT super_category FROM has_other WHERE child_category=name) WHERE super_category=name; 
     DELETE FROM responsible_for WHERE category_name=name;
     DELETE FROM shelf WHERE category_name=name;
     DELETE FROM product WHERE category_name=name;
@@ -436,9 +418,7 @@ insert into product values('0000000000006', 'Vinhos', 'Vinho Tinto');
 insert into product values('0000000000007', 'Vegetais', 'Couve-flor');
 insert into product values('0000000000008', 'Leite', 'Leite de chocolate');
 insert into product values('0000000000009', 'Batata', 'Batata');
---insert into product values('0000000000010', 'Doces', 'Pintarolas');
 insert into product values('0000000000010', 'Doces Simples', 'Pintarolas');
---insert into product values('0000000000011', 'Doces', 'Gelatina de Morango');
 insert into product values('0000000000011', 'Doces Simples', 'Gelatina de Morango');
 insert into product values('0000000000012', 'Carnes Brancas','Frango inteiro');
 insert into product values('0000000000013', 'Vegetais', 'Cenoura');
@@ -461,14 +441,10 @@ insert into has_other values('Laticínios', 'Leite');
 insert into has_other values('Laticínios', 'Iogurtes');
 
 insert into shelf values(1, 54623, 'Mars Inc.', 60.00, 'Tabletes');
---insert into shelf values(2, 54623, 'Mars Inc.', 40.00, 'Tubérculos');
 insert into shelf values(2, 54623, 'Mars Inc.', 40.00, 'Batata');
---insert into shelf values(1, 61824, 'Mars Inc.', 100.00, 'Carne');
 insert into shelf values(1, 61824, 'Mars Inc.', 100.00, 'Carnes Vermelhas');
---insert into shelf values(2, 61824, 'Mars Inc.', 20.00, 'Doces');
 insert into shelf values(2, 61824, 'Mars Inc.', 20.00, 'Doces Simples');
 insert into shelf values(4, 61824, 'Mars Inc.', 30.00, 'Leite');
---insert into shelf values(1, 73719, 'Paytec', 100.00, 'Laticínios');
 insert into shelf values(1, 73719, 'Paytec', 100.00, 'Leite');
 insert into shelf values(3, 73719, 'Paytec', 60.00, 'Águas');
 insert into shelf values(1, 84712, 'Seaga', 100.00, 'Carnes Vermelhas');
