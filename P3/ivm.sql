@@ -100,10 +100,10 @@ create table installed_at (
 );
 
 create table shelf (
-	shelf_nr numeric(16,0) not null, --?
+	shelf_nr numeric(16,0) not null,
 	ivm_serial_number numeric(5,0) not null,
 	ivm_manuf varchar(255) not null,
-	shelf_height numeric(5, 2) not null, -- ?
+	shelf_height numeric(5, 2) not null,
 	category_name varchar(255) not null,
 	constraint pk_shelf primary key(shelf_nr, ivm_serial_number, ivm_manuf),
 	constraint fk_shelf_ivm foreign key(ivm_serial_number, ivm_manuf) references ivm(ivm_serial_number, ivm_manuf),

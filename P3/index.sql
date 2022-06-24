@@ -6,13 +6,15 @@ WHERE R.tin = P.tin and P. nome_cat = 'Frutos'
 CREATE INDEX retailer_name_index ON retailer USING hash(retailer_name); 
 /*
 hash(nome) em retalhista: 
-  no distinct compara apenas os valores no mesmo "contentor" 
+  Em "DISTINCT", compara-se apenas os valores de igual hash code 
  para ver se são iguais, diminuindo tempo de pesquisa
 */
 CREATE INDEX category_name_index ON responsible_for USING hash(category_name);
 /*
  hash(nome_cat) seria preferível ao default btree no responsavel_por: 
- dessa forma, comparava-se apenas os nome_cat com o mesmo hash code que 'Frutos'
+  Dessa forma, tentava-se procurar apenas pelas categorias com o mesmo
+ hash code (e, por isso, no mesmo sub-grupo da tabela) que 'Frutos', 
+ diminuindo tempo de pesquisa 
 */
 
 
